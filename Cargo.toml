@@ -1,0 +1,12 @@
+[package]
+name = "wasm-website-frontend"
+version = "0.1.0"
+authors = ["Robert <robert.balicki@gmail.com>"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+jsx_macro = { path = "../jsx_compiler/jsx_macro" }
+jsx_types = { path = "../jsx_compiler/jsx_types" }

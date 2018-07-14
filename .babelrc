@@ -1,0 +1,9 @@
+{
+  "presets": ["babel-preset-react", "babel-preset-es2015", "babel-preset-stage-1"],
+  "plugins": [
+    "react-hot-loader/babel",
+    "babel-plugin-transform-class-properties",
+    "babel-plugin-transform-runtime",
+    "babel-plugin-transform-decorators-legacy"
+  ]
+}
