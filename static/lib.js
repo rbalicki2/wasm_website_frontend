@@ -26,7 +26,7 @@ export function initialize(id, appStateInterface) {
   appId = id;
   const appNode = getAppNode();
   appNode.addEventListener('click', (e) => {
-    console.log('ON CLICK MOTHER FUCKER');
+    console.log('on click in js');
     appStateInterface.handle_event('OnClick', JSON.stringify(getPathFromChildToParent(appNode, e.target)));
   });
 }

@@ -1,6 +1,8 @@
 use jsx_macro::*;
 use jsx_types::*;
 
+use std::boxed::FnBox;
+
 pub struct Welcome {}
 
 impl Welcome {
@@ -10,8 +12,8 @@ impl Welcome {
 }
 
 impl Component for Welcome {
-  fn render(&self) -> HtmlToken {
-    let click_handler: Box<FnOnce(Event) -> ()> = Box::new(|_| {});
-    jsx!(<div>hihihi<h1 OnClick={click_handler}>welcome</h1></div>)
+  fn render(&mut self) -> HtmlToken {
+    let click_handler: Box<FnBox(Event) -> ()> = Box::new(|_| {});
+    jsx!(<div><h1 OnClick={click_handler}>welcome</h1></div>)
   }
 }
