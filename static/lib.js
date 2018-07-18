@@ -28,6 +28,7 @@ export function initialize(id, appStateInterface) {
   appNode.addEventListener('click', (e) => {
     console.log('on click in js');
     appStateInterface.handle_event('OnClick', JSON.stringify(getPathFromChildToParent(appNode, e.target)));
+    setTimeout(() => render(appStateInterface.get_inner_html()));
   });
   setTimeout(() => render(appStateInterface.get_inner_html()));
 }

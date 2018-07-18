@@ -17,13 +17,14 @@ impl Welcome {
 
 impl<'a> Component<'a> for Welcome {
   fn render(&'a mut self) -> HtmlToken<'a> {
-    let click_handler: Box<FnMut(Event) -> () + 'a> = Box::new(|_| {
+    let click_count = self.click_count;
+    let click_handler: Box<FnMut(Event) -> () + 'a> = Box::new(move |_| {
       self.click_count += 1;
     });
     // let click_handler: () = click_handler;
     // let click_handler_2: Box<FnMut(Event) -> ()> = Box::new(|_| {
     //   self.click_count += 2;
     // });
-    jsx!(<div><h1 OnClick={click_handler}>Ive been clicked {self.click_count}{' '} times</h1></div>)
+    jsx!(<div OnClick={click_handler}>Ive been clicked {click_count}{' '} times</div>)
   }
 }
