@@ -20,6 +20,6 @@ impl<'a> Component<'a> for Welcome {
     let click_handler: Box<FnMut(Event) -> ()> = Box::new(|_| {
       // self.click_count += 1;
     });
-    jsx!(<div><h1 OnClick={click_handler}>Ive been clicked {self.click_count} times</h1></div>)
+    jsx!(<div><h1 OnClick={click_handler}>Ive been clicked {self.click_count}{' '} times</h1></div>)
   }
 }

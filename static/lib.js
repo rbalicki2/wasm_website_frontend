@@ -17,7 +17,7 @@ const getPathFromChildToParent = (finalParent, node) => {
   return path.reverse().slice(1);
 };
 
-export function render(str) {
+function render(str) {
   const appNode = getAppNode();
   appNode.innerHTML = str;
 }
@@ -29,4 +29,5 @@ export function initialize(id, appStateInterface) {
     console.log('on click in js');
     appStateInterface.handle_event('OnClick', JSON.stringify(getPathFromChildToParent(appNode, e.target)));
   });
+  setTimeout(() => render(appStateInterface.get_inner_html()));
 }
