@@ -18,6 +18,8 @@ impl Welcome {
 impl<'a> Component<'a> for Welcome {
   fn render(&'a mut self) -> HtmlToken<'a> {
     let click_count = self.click_count;
+    let times_pluralized = if click_count == 1 { " time" } else { " times" };
+
     let click_handler: Box<FnMut(Event) -> () + 'a> = Box::new(move |_| {
       self.click_count += 1;
     });
@@ -25,6 +27,6 @@ impl<'a> Component<'a> for Welcome {
     // let click_handler_2: Box<FnMut(Event) -> ()> = Box::new(|_| {
     //   self.click_count += 2;
     // });
-    jsx!(<div OnClick={click_handler}>Ive been clicked {click_count}{' '} times</div>)
+    jsx!(<div OnClick={click_handler}>I have been clicked {click_count}{times_pluralized}</div>)
   }
 }
