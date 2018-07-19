@@ -25,10 +25,17 @@ function render(str) {
 export function initialize(id, appStateInterface) {
   appId = id;
   const appNode = getAppNode();
-  appNode.addEventListener('click', (e) => {
-    console.log('on click in js');
-    appStateInterface.handle_event('OnClick', JSON.stringify(getPathFromChildToParent(appNode, e.target)));
-    setTimeout(() => render(appStateInterface.get_inner_html()));
+  [
+    'OnClick',
+    'OnMouseOut',
+    'OnMouseOver',
+  ].forEach((eventName) => {
+    const jsEvent = eventName.substring(2).toLowerCase();
+    appNode.addEventListener(jsEvent, e => {
+      console.log('event listener', eventName);
+      appStateInterface.handle_event(eventName, JSON.stringify(getPathFromChildToParent(appNode, e.target)));
+      setTimeout(() => render(appStateInterface.get_inner_html()));
+    });
   });
   setTimeout(() => render(appStateInterface.get_inner_html()));
 }
