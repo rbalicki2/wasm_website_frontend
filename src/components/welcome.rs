@@ -37,7 +37,8 @@ impl<'a> Component<'a> for Welcome {
     });
     let on_mouse_out_handler: Box<FnMut(Event) -> () + 'a> = Box::new(move |_| {
       let mut s = cell_3.borrow_mut();
-      s.is_hovering = false;
+      // s.is_hovering = false;
+      s.click_count = 0;
     });
     // let click_handler: () = click_handler;
     // let click_handler_2: Box<FnMut(Event) -> ()> = Box::new(|_| {
@@ -45,7 +46,7 @@ impl<'a> Component<'a> for Welcome {
     // });
     jsx!(<div
       OnClick={click_handler}
-      OnMouseOver={on_mouse_over_handler}
+      OnMouseOut={on_mouse_out_handler}
     >
       I have been clicked {click_count}{times_pluralized}
     </div>)

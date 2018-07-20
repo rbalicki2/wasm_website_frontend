@@ -28,7 +28,8 @@ export function initialize(id, appStateInterface) {
   [
     'OnClick',
     'OnMouseOut',
-    'OnMouseOver',
+    // 'OnMouseOver',
+    // 'OnChange',
   ].forEach((eventName) => {
     const jsEvent = eventName.substring(2).toLowerCase();
     appNode.addEventListener(jsEvent, e => {
