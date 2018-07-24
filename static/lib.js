@@ -33,7 +33,7 @@ export function initialize(id, appStateInterface) {
   ].forEach((eventName) => {
     const jsEvent = eventName.substring(2).toLowerCase();
     appNode.addEventListener(jsEvent, e => {
-      console.log('event listener', eventName, e);
+      console.log('event listener', eventName);
       appStateInterface.handle_event(eventName, JSON.stringify(getPathFromChildToParent(appNode, e.target)));
       setTimeout(() => render(appStateInterface.get_inner_html()));
     });

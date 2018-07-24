@@ -22,12 +22,12 @@ impl<'a> Component<'a> for Welcome {
     let click_count = self.click_count;
     let times_pluralized = if click_count == 1 { " time" } else { " times" };
 
-    // let cell = Rc::new(RefCell::new(self));
+    let cell = Rc::new(RefCell::new(self));
     // let cell_2 = cell.clone();
-    // let increment: Box<FnMut(Event) -> () + 'a> = Box::new(move |_| {
-    //   let mut s = cell.borrow_mut();
-    //   s.click_count += 1;
-    // });
+    let increment: Box<FnMut(events::OnClickEvent) -> () + 'a> = Box::new(move |_| {
+      let mut s = cell.borrow_mut();
+      s.click_count += 1;
+    });
     // let decrement: Box<FnMut(Event) -> () + 'a> = Box::new(move |_| {
     //   let mut s = cell_2.borrow_mut();
     //   s.click_count -= 1;
@@ -37,7 +37,7 @@ impl<'a> Component<'a> for Welcome {
 
     jsx!(<div>
       I have been clicked {click_count}{times_pluralized}
-      <div style={cursor_pointer}>+</div>
+      <div OnClick={increment} style={cursor_pointer}>+</div>
       <div style={cursor_pointer}>-</div>
     </div>)
   }
