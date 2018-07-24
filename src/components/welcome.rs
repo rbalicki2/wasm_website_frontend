@@ -24,9 +24,13 @@ impl<'a> Component<'a> for Welcome {
 
     let cell = Rc::new(RefCell::new(self));
     // let cell_2 = cell.clone();
-    let increment: Box<FnMut(events::OnClickEvent) -> () + 'a> = Box::new(move |_| {
+    let increment: Box<FnMut(&events::OnClickEvent) -> () + 'a> = Box::new(move |&ref event| {
       let mut s = cell.borrow_mut();
-      s.click_count += 1;
+      if event.shift_key {
+        s.click_count -= 1;
+      } else {
+        s.click_count += 1;
+      }
     });
     // let decrement: Box<FnMut(Event) -> () + 'a> = Box::new(move |_| {
     //   let mut s = cell_2.borrow_mut();
