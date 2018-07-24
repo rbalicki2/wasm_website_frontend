@@ -3,8 +3,6 @@ use jsx_types::*;
 use std::cell::RefCell;
 use std::rc::Rc;
 
-// use std::boxed::FnBox;
-
 pub struct Welcome {
   click_count: i32,
 }
