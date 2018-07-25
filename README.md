@@ -34,3 +34,4 @@
 * multiple apps
 * should've used typescript
 * reconciliation
+* let foo: () = foo;
