@@ -31,7 +31,7 @@ const getPathFromChildToParent = (finalParent, node) => {
   while (node && node !== finalParent) {
     // N.B. this excludes strings and such, but those can't have event handlers
     // so we're okay.
-    path.push(Array.from(node.parentElement.children).findIndex(x => x === node));
+    path.push(Array.from(node.parentElement.childNodes).findIndex(x => x === node));
     node = node.parentElement;
   }
   // N.B. if this is called with a node that is not a child of finalParent,
@@ -41,13 +41,8 @@ const getPathFromChildToParent = (finalParent, node) => {
   return path.reverse().slice(1);
 };
 
-function render(str) {
-  const appNode = getAppNode();
-  appNode.innerHTML = str;
-}
-
 const findNodeWithPath = (path) =>
-  path.reduce((node, childIndex) => (node && node.children[childIndex]), getAppNode());
+  path.reduce((node, childIndex) => (node && node.childNodes[childIndex]), getAppNode());
 
 function scheduleRender(appStateInterface) {
   setTimeout(() => {
@@ -55,18 +50,20 @@ function scheduleRender(appStateInterface) {
 
     diff.forEach(([path, operation]) => {
       const node = findNodeWithPath(path);
-
       // this is how enum's are serialized...
       if (operation.Replace) {
+        // LOL we should not be doing this
+        node.nodeValue = operation.Replace.new_inner_html;
         node.innerHTML = operation.Replace.new_inner_html;
       }
-    })
+    });
   });
 }
   
 export function initialize(id, appStateInterface) {
   appId = id;
   const appNode = getAppNode();
+  appNode.innerHTML = '<div></div>';
 
   // OnClick
   appNode.addEventListener('click', (e) => {
