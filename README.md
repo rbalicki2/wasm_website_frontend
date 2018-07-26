@@ -15,6 +15,7 @@
 * CSS?
 * reconciliation
   * maybe the HtmlToken needs a version without event handlers that implements Clone
+* npm modules for js functions... maybe they can all go into npm module and all I need is to wasm-bindgen it to that folder??
 
 # Blog topics to cover
 

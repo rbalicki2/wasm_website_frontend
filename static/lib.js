@@ -50,10 +50,8 @@ const findNodeWithPath = (path) =>
   path.reduce((node, childIndex) => (node && node.children[childIndex]), getAppNode());
 
 function scheduleRender(appStateInterface) {
-  // setTimeout(() => render(appStateInterface.get_inner_html()));
   setTimeout(() => {
     const diff = JSON.parse(appStateInterface.get_diff());
-    console.log(diff);
 
     diff.forEach(([path, operation]) => {
       const node = findNodeWithPath(path);
@@ -81,7 +79,7 @@ export function initialize(id, appStateInterface) {
 
   // MouseOver
   appNode.addEventListener('mouseover', (e) => {
-    console.log(e);
+    // console.log(e);
   });
 
   scheduleRender(appStateInterface);
