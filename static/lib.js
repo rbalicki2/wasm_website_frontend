@@ -34,6 +34,19 @@ const inputEventToJson = event => ({
   value: event.target.value,
 });
 
+const keyboardEventToJson = event => ({
+  alt_key: event.altKey,
+  char_code: event.charCode,
+  code: event.code,
+  ctrl_key: event.ctrlKey,
+  key: event.key,
+  key_code: event.keyCode,
+  meta_key: event.metaKey,
+  shift_key: event.shiftKey,
+  time_stamp: event.timeStamp,
+  event_type: event.type,
+});
+
 const htmlToElement = (html) => {
   var template = document.createElement('template');
   html = html.trim(); // Never return a text node of whitespace as the result
@@ -117,7 +130,7 @@ export function initialize(id, appStateInterface) {
 
   // MouseOver
   appNode.addEventListener('mouseover', (e) => {
-    const shouldUpdate = appStateInterface.handle_mouse_over(
+    const shouldUpdate = appStateInterface.handle_mouseover(
       JSON.stringify(mouseEventToJson(e)),
       JSON.stringify(getPathFromChildToParent(appNode, e.target))
     );
@@ -126,7 +139,7 @@ export function initialize(id, appStateInterface) {
 
   // MouseOut
   appNode.addEventListener('mouseout', (e) => {
-    const shouldUpdate = appStateInterface.handle_mouse_out(
+    const shouldUpdate = appStateInterface.handle_mouseout(
       JSON.stringify(mouseEventToJson(e)),
       JSON.stringify(getPathFromChildToParent(appNode, e.target))
     );
@@ -137,6 +150,14 @@ export function initialize(id, appStateInterface) {
   appNode.addEventListener('input', (e) => {
     const shouldUpdate = appStateInterface.handle_input(
       JSON.stringify(inputEventToJson(e)),
+      JSON.stringify(getPathFromChildToParent(appNode, e.target))
+    );
+    if (shouldUpdate) { scheduleRender(appStateInterface); }
+  });
+
+  appNode.addEventListener('keydown', (e) => {
+    const shouldUpdate = appStateInterface.handle_keydown(
+      JSON.stringify(keyboardEventToJson(e)),
       JSON.stringify(getPathFromChildToParent(appNode, e.target))
     );
     if (shouldUpdate) { scheduleRender(appStateInterface); }

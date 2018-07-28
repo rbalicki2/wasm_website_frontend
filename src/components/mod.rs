@@ -1,10 +1,5 @@
-mod welcome;
-mod left;
-mod right;
-mod state_manager;
+mod app_state;
+mod input;
 
-// pub use self::welcome::*;
-// pub use self::left::*;
-// pub use self::right::*;
-pub use self::state_manager::*;
+pub use self::app_state::*;
 

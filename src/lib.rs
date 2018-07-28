@@ -12,7 +12,7 @@ pub mod components;
 #[wasm_bindgen]
 pub fn start() {
   // let component = components::Welcome::new();
-  let component = components::StateManager::new();
+  let component = components::AppState::new();
 
   smithy::mount("app", Box::new(component));
 }
