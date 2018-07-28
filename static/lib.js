@@ -106,7 +106,6 @@ function scheduleRender(appStateInterface) {
 export function initialize(id, appStateInterface) {
   appId = id;
   const appNode = getAppNode();
-  appNode.innerHTML = '<div></div>';
   
   appNode.addEventListener('click', (e) => {
     const shouldUpdate = appStateInterface.handle_click(

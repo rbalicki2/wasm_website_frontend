@@ -17,3 +17,4 @@
 * Sub components
 * Make a Todo app
 * Size of bundle
+* multiple apps in same page
