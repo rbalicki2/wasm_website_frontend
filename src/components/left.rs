@@ -13,8 +13,8 @@ impl LeftComponent {
   }
 }
 
-impl<'a> Component<'a> for LeftComponent {
-  fn render(&'a mut self) -> HtmlToken<'a> {
+impl<'a> Component<'a, ()> for LeftComponent {
+  fn render(&'a mut self, props: ()) -> HtmlToken<'a> {
     // let state = self.clone();
     jsx!(<div>
       left

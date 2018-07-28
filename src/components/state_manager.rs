@@ -14,18 +14,18 @@ pub struct StateManager {
 impl StateManager {
   pub fn new() -> StateManager {
     StateManager {
-      is_left: false,
+      is_left: true,
       left_component: LeftComponent::new(),
     }
   }
 }
 
-impl<'a> Component<'a> for StateManager {
-  fn render(&'a mut self) -> HtmlToken<'a> {
+impl<'a> Component<'a, ()> for StateManager {
+  fn render(&'a mut self, props: ()) -> HtmlToken<'a> {
     let state = self.clone();
     jsx!(<div>
       state manager
-      { if state.is_left { Some(self.left_component.render()) } else { None } }
+      { if state.is_left { Some(self.left_component.render(())) } else { None } }
     </div>)
   }
 }
