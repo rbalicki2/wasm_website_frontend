@@ -11,7 +11,8 @@ pub mod components;
 
 #[wasm_bindgen]
 pub fn start() {
-  let component = components::Welcome::new();
+  // let component = components::Welcome::new();
+  let component = components::StateManager::new();
 
   smithy::mount("app", Box::new(component));
 }
