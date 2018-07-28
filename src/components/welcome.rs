@@ -41,7 +41,7 @@ impl<'a> Component<'a> for Welcome {
 
     let cursor_pointer = "cursor: pointer; user-select: none;";
 
-    jsx!(<div>
+    jsx_verbose!(<div>
       I have been clicked {click_count}{times_pluralized}
       <div OnClick={increment} style={cursor_pointer}>+</div>
       <div OnClick={decrement} style={cursor_pointer}>-</div>
