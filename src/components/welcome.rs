@@ -45,7 +45,7 @@ impl<'a> Component<'a> for Welcome {
       I have been clicked {click_count}{times_pluralized}
       <div OnClick={increment} style={cursor_pointer}>+</div>
       <div OnClick={decrement} style={cursor_pointer}>-</div>
-      { if click_count > 5 {Some("you clicked a lot, yo")} else {None} }
+      { if click_count > 1 {Some("you clicked a lot, yo")} else {None} }
     </div>)
   }
 }

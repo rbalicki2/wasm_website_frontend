@@ -47,15 +47,27 @@ const findNodeWithPath = (path) =>
 function scheduleRender(appStateInterface) {
   setTimeout(() => {
     const diff = JSON.parse(appStateInterface.get_diff());
-    console.log(diff);
 
     diff.forEach(([path, operation]) => {
-      const node = findNodeWithPath(path);
       // this is how enum's are serialized...
       if (operation.Replace) {
+        const node = findNodeWithPath(path);
         // LOL we should not be doing this
         node.nodeValue = operation.Replace.new_inner_html;
         node.innerHTML = operation.Replace.new_inner_html;
+      } else if (operation.Insert) {
+        const htmlToInsert = operation.Insert.new_inner_html;
+        const node = findNodeWithPath(path.slice(0, path.length - 1));
+        const lastPath = path[path.length - 1];
+        if (lastPath === 0) {
+          node.insertAdjacentHTML('afterbegin', htmlToInsert);
+        } else {
+          const childNode = node.childNodes[lastPath - 1];
+          childNode.insertAdjacentHTML('afterend', htmlToInsert);
+        }
+      } else if (operation.Delete) {
+        const node = findNodeWithPath(path);
+        node.remove();
       }
     });
   });
