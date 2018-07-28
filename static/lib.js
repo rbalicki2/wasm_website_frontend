@@ -67,7 +67,6 @@ function scheduleRender(appStateInterface) {
   setTimeout(() => {
     const diff = JSON.parse(appStateInterface.get_diff());
     diff.forEach(([path, operation]) => {
-      console.log(path, operation);
       // this is how enum's are serialized...
       if (operation.Replace) {
         const htmlToInsert = operation.Replace.new_inner_html;
@@ -110,38 +109,38 @@ export function initialize(id, appStateInterface) {
   appNode.innerHTML = '<div></div>';
   
   appNode.addEventListener('click', (e) => {
-    appStateInterface.handle_click(
+    const shouldUpdate = appStateInterface.handle_click(
       JSON.stringify(mouseEventToJson(e)),
       JSON.stringify(getPathFromChildToParent(appNode, e.target))
     );
-    scheduleRender(appStateInterface);
+    if (shouldUpdate) { scheduleRender(appStateInterface); }
   });
 
   // MouseOver
   appNode.addEventListener('mouseover', (e) => {
-    appStateInterface.handle_mouse_over(
+    const shouldUpdate = appStateInterface.handle_mouse_over(
       JSON.stringify(mouseEventToJson(e)),
       JSON.stringify(getPathFromChildToParent(appNode, e.target))
     );
-    scheduleRender(appStateInterface);
+    if (shouldUpdate) { scheduleRender(appStateInterface); }
   });
 
   // MouseOut
   appNode.addEventListener('mouseout', (e) => {
-    appStateInterface.handle_mouse_out(
+    const shouldUpdate = appStateInterface.handle_mouse_out(
       JSON.stringify(mouseEventToJson(e)),
       JSON.stringify(getPathFromChildToParent(appNode, e.target))
     );
-    scheduleRender(appStateInterface);
+    if (shouldUpdate) { scheduleRender(appStateInterface); }
   });
 
   // Input
   appNode.addEventListener('input', (e) => {
-    appStateInterface.handle_input(
+    const shouldUpdate = appStateInterface.handle_input(
       JSON.stringify(inputEventToJson(e)),
       JSON.stringify(getPathFromChildToParent(appNode, e.target))
     );
-    scheduleRender(appStateInterface);
+    if (shouldUpdate) { scheduleRender(appStateInterface); }
   });
 
   scheduleRender(appStateInterface);

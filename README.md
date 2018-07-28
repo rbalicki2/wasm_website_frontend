@@ -14,7 +14,6 @@
 * npm modules for js functions... maybe they can all go into npm module and all I need is to wasm-bindgen it to that folder?? js-sys!!!!! FUCK YEAHHHHHH
 * TODO app, add Bootstrap styling
 * Handle event should return a bool did_update
-* Input event
 * Sub components
 * Make a Todo app
 * Size of bundle
