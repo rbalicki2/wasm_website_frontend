@@ -20,17 +20,23 @@ const mouseEventToJson = event => ({
   screen_y: event.screenY,
   shift_key: event.shiftKey,
   time_stamp: event.timeStamp,
-  // type is a reserved word
+  // type is a reserved word in Rust
   event_type: event.type,
   x: event.x,
   y: event.y,
 });
 
+const htmlToElement = (html) => {
+  var template = document.createElement('template');
+  html = html.trim(); // Never return a text node of whitespace as the result
+  template.innerHTML = html;
+  return template.content.firstChild;
+}
+window.htmlToElement = htmlToElement;
+
 const getPathFromChildToParent = (finalParent, node) => {
   const path = [];
   while (node && node !== finalParent) {
-    // N.B. this excludes strings and such, but those can't have event handlers
-    // so we're okay.
     path.push(Array.from(node.parentElement.childNodes).findIndex(x => x === node));
     node = node.parentElement;
   }
@@ -47,23 +53,28 @@ const findNodeWithPath = (path) =>
 function scheduleRender(appStateInterface) {
   setTimeout(() => {
     const diff = JSON.parse(appStateInterface.get_diff());
-
     diff.forEach(([path, operation]) => {
       // this is how enum's are serialized...
       if (operation.Replace) {
-        const node = findNodeWithPath(path);
-        // LOL we should not be doing this
-        node.nodeValue = operation.Replace.new_inner_html;
-        node.innerHTML = operation.Replace.new_inner_html;
+        const htmlToInsert = operation.Replace.new_inner_html;
+        const parentNode = findNodeWithPath(path.slice(0, path.length - 1));
+        const lastPath = path[path.length - 1];
+        const childNode = parentNode.childNodes[lastPath];
+
+        parentNode.insertBefore(htmlToElement(htmlToInsert), childNode);
+        childNode.remove();
       } else if (operation.Insert) {
         const htmlToInsert = operation.Insert.new_inner_html;
-        const node = findNodeWithPath(path.slice(0, path.length - 1));
+        const parentNode = findNodeWithPath(path.slice(0, path.length - 1));
         const lastPath = path[path.length - 1];
+        const isLastElement = lastPath === parentNode.childNodes.length;
         if (lastPath === 0) {
-          node.insertAdjacentHTML('afterbegin', htmlToInsert);
+          parentNode.insertAdjacentHTML('afterbegin', htmlToInsert);
+        } else if (isLastElement) {
+          parentNode.insertAdjacentHTML('beforeend', htmlToInsert);
         } else {
-          const childNode = node.childNodes[lastPath - 1];
-          childNode.insertAdjacentHTML('afterend', htmlToInsert);
+          const childNode = parentNode.childNodes[lastPath - 1];
+          parentNode.insertBefore(htmlToElement(htmlToInsert), childNode);
         }
       } else if (operation.Delete) {
         const node = findNodeWithPath(path);
@@ -72,13 +83,12 @@ function scheduleRender(appStateInterface) {
     });
   });
 }
-  
+
 export function initialize(id, appStateInterface) {
   appId = id;
   const appNode = getAppNode();
   appNode.innerHTML = '<div></div>';
-
-  // OnClick
+  
   appNode.addEventListener('click', (e) => {
     appStateInterface.handle_click(
       JSON.stringify(mouseEventToJson(e)),
@@ -89,7 +99,19 @@ export function initialize(id, appStateInterface) {
 
   // MouseOver
   appNode.addEventListener('mouseover', (e) => {
-    // console.log(e);
+    appStateInterface.handle_mouse_over(
+      JSON.stringify(mouseEventToJson(e)),
+      JSON.stringify(getPathFromChildToParent(appNode, e.target))
+    );
+    scheduleRender(appStateInterface);
+  });
+
+  appNode.addEventListener('mouseout', (e) => {
+    appStateInterface.handle_mouse_out(
+      JSON.stringify(mouseEventToJson(e)),
+      JSON.stringify(getPathFromChildToParent(appNode, e.target))
+    );
+    scheduleRender(appStateInterface);
   });
 
   scheduleRender(appStateInterface);

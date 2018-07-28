@@ -10,6 +10,7 @@
 
 * builder pattern for dom element
 * on click event with a few random properties
+  * mouse over, etc. should work now!
 * learn about std web
   * maybe std web's js! macro can be used to not have to include the js files in the core crate
 * CSS?
