@@ -47,6 +47,7 @@ const findNodeWithPath = (path) =>
 function scheduleRender(appStateInterface) {
   setTimeout(() => {
     const diff = JSON.parse(appStateInterface.get_diff());
+    console.log(diff);
 
     diff.forEach(([path, operation]) => {
       const node = findNodeWithPath(path);

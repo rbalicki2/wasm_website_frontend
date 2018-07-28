@@ -21,7 +21,7 @@ impl<'a> Component<'a> for Welcome {
     let times_pluralized = if click_count == 1 { " time" } else { " times" };
 
     let cell = Rc::new(RefCell::new(self));
-    // let cell_2 = cell.clone();
+    let cell_2 = cell.clone();
     let increment: Box<FnMut(&events::MouseEvent) -> () + 'a> = Box::new(move |&ref event| {
       let mut s = cell.borrow_mut();
       if event.alt_key && event.shift_key {
@@ -34,17 +34,18 @@ impl<'a> Component<'a> for Welcome {
         s.click_count += 1;
       }
     });
-    // let decrement: Box<FnMut(Event) -> () + 'a> = Box::new(move |_| {
-    //   let mut s = cell_2.borrow_mut();
-    //   s.click_count -= 1;
-    // });
+    let decrement: Box<FnMut(&events::MouseEvent) -> () + 'a> = Box::new(move |_| {
+      let mut s = cell_2.borrow_mut();
+      s.click_count -= 1;
+    });
 
     let cursor_pointer = "cursor: pointer; user-select: none;";
 
     jsx!(<div>
       I have been clicked {click_count}{times_pluralized}
       <div OnClick={increment} style={cursor_pointer}>+</div>
-      <div style={cursor_pointer}>-</div>
+      <div OnClick={decrement} style={cursor_pointer}>-</div>
+      { if click_count > 5 {Some("you clicked a lot, yo")} else {None} }
     </div>)
   }
 }
