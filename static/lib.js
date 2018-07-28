@@ -26,6 +26,14 @@ const mouseEventToJson = event => ({
   y: event.y,
 });
 
+const inputEventToJson = event => ({
+  data: event.data,
+  time_stamp: event.timeStamp,
+  event_type: event.type,
+  which: event.which,
+  value: event.target.value,
+});
+
 const htmlToElement = (html) => {
   var template = document.createElement('template');
   html = html.trim(); // Never return a text node of whitespace as the result
@@ -109,6 +117,14 @@ export function initialize(id, appStateInterface) {
   appNode.addEventListener('mouseout', (e) => {
     appStateInterface.handle_mouse_out(
       JSON.stringify(mouseEventToJson(e)),
+      JSON.stringify(getPathFromChildToParent(appNode, e.target))
+    );
+    scheduleRender(appStateInterface);
+  });
+
+  appNode.addEventListener('input', (e) => {
+    appStateInterface.handle_input(
+      JSON.stringify(inputEventToJson(e)),
       JSON.stringify(getPathFromChildToParent(appNode, e.target))
     );
     scheduleRender(appStateInterface);
