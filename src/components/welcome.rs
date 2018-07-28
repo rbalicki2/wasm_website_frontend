@@ -20,8 +20,8 @@
 //   }
 // }
 
-// impl<'a> Component<'a> for Welcome {
-//   fn render(&'a mut self) -> HtmlToken<'a> {
+// impl<'a> Component<'a, ()> for Welcome {
+//   fn render(&'a mut self, _props: ()) -> HtmlToken<'a> {
 //     let state = self.clone();
 //     // let click_count = self.click_count;
 //     // let is_hovering = self.is_hovering;

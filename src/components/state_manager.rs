@@ -9,6 +9,7 @@ use super::left::*;
 pub struct StateManager {
   pub is_left: bool,
   pub left_component: LeftComponent,
+  pub my_magic_string: String,
 }
 
 impl StateManager {
@@ -16,16 +17,29 @@ impl StateManager {
     StateManager {
       is_left: true,
       left_component: LeftComponent::new(),
+      my_magic_string: "init!".to_string(),
     }
   }
 }
 
 impl<'a> Component<'a, ()> for StateManager {
-  fn render(&'a mut self, props: ()) -> HtmlToken<'a> {
+  fn render(&'a mut self, _props: ()) -> HtmlToken<'a> {
     let state = self.clone();
+    let state_2 = self.clone();
+    let mut left_component = &mut self.left_component;
+    let cell = Rc::new(RefCell::new(&mut self.my_magic_string));
+
+    let left_component_props: LeftComponentProps<'a> = LeftComponentProps {
+      magic_string: state.my_magic_string,
+      set_magic_string: Box::new(move |val| {
+        let mut state = cell.borrow_mut();
+        **state = val;
+      }),
+    };
+
     jsx!(<div>
       state manager
-      { if state.is_left { Some(self.left_component.render(())) } else { None } }
+      { if state_2.is_left { Some(left_component.render(left_component_props)) } else { None } }
     </div>)
   }
 }
