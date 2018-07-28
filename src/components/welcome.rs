@@ -54,14 +54,14 @@ impl<'a> Component<'a> for Welcome {
 
     let cursor_pointer = "cursor: pointer; user-select: none;";
 
-      // <div OnClick={decrement} style={cursor_pointer}>-</div>
-      // { if click_count > 2 {Some("you clicked a lot, yo, this many times: ")} else {None} }
-      // { if click_count > 2 {Some(click_count)} else {None}}
     jsx!(<div>
       I have been clicked {click_count}{times_pluralized}
       <h1 OnMouseOver={start_hovering} OnMouseOut={stop_hovering}>Hover here</h1>
       { if is_hovering {Some("We hovering")} else {None} }
       <div OnClick={increment} style={cursor_pointer}>+</div>
+      <div OnClick={decrement} style={cursor_pointer}>-</div>
+      { if click_count > 2 {Some("you clicked a lot, yo, this many times: ")} else {None} }
+      { if click_count > 2 {Some(click_count)} else {None}}
     </div>)
   }
 }
