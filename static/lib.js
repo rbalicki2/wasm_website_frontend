@@ -44,9 +44,14 @@ window.htmlToElement = htmlToElement;
 
 const getPathFromChildToParent = (finalParent, node) => {
   const path = [];
-  while (node && node !== finalParent) {
+  while (node && node.parentElement && node !== finalParent) {
     path.push(Array.from(node.parentElement.childNodes).findIndex(x => x === node));
     node = node.parentElement;
+  }
+
+  if (node !== finalParent) {
+    // TODO don't do this
+    return false;
   }
   // N.B. if this is called with a node that is not a child of finalParent,
   // it will return a bogus path.
@@ -62,6 +67,7 @@ function scheduleRender(appStateInterface) {
   setTimeout(() => {
     const diff = JSON.parse(appStateInterface.get_diff());
     diff.forEach(([path, operation]) => {
+      console.log(path, operation);
       // this is how enum's are serialized...
       if (operation.Replace) {
         const htmlToInsert = operation.Replace.new_inner_html;
@@ -87,6 +93,12 @@ function scheduleRender(appStateInterface) {
       } else if (operation.Delete) {
         const node = findNodeWithPath(path);
         node.remove();
+      } else if (operation.UpdateAttributes) {
+        const node = findNodeWithPath(path);
+        Object.entries(operation.UpdateAttributes.new_attributes)
+          .forEach(([attr, val]) => {
+            node[attr] = val;
+          });
       }
     });
   });
@@ -114,6 +126,7 @@ export function initialize(id, appStateInterface) {
     scheduleRender(appStateInterface);
   });
 
+  // MouseOut
   appNode.addEventListener('mouseout', (e) => {
     appStateInterface.handle_mouse_out(
       JSON.stringify(mouseEventToJson(e)),
@@ -122,6 +135,7 @@ export function initialize(id, appStateInterface) {
     scheduleRender(appStateInterface);
   });
 
+  // Input
   appNode.addEventListener('input', (e) => {
     appStateInterface.handle_input(
       JSON.stringify(inputEventToJson(e)),

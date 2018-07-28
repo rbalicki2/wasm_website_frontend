@@ -67,14 +67,14 @@ impl<'a> Component<'a> for Welcome {
       }
     });
 
-    let cursor_pointer = "cursor: pointer; user-select: none;";
+    // let cursor_pointer = "cursor: pointer; user-select: none;";
 
       // <div OnClick={increment} style={cursor_pointer}>+</div>
       // <div OnClick={decrement} style={cursor_pointer}>-</div>
       // I have been clicked {click_count}{times_pluralized}
       // And I typed {state.text_input.clone()}
-    jsx_verbose!(
-      <input on_input={update_text} value={state.text_input.clone()} />
-    )
+    jsx!(<div>
+      <input id="input" on_input={update_text} value={state.text_input.clone()} />
+    </div>)
   }
 }
