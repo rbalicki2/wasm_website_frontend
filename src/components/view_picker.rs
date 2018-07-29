@@ -23,8 +23,8 @@ pub struct ViewPickerProps<'a> {
 //   }
 // }
 
-impl<'a> Component<'a, ViewPickerProps<'a>> for ViewPicker {
-  fn render(&'a mut self, props: ViewPickerProps<'a>) -> HtmlToken<'a> {
+impl<'a> StatelessComponent<'a, ViewPickerProps<'a>> for ViewPicker {
+  fn render(props: ViewPickerProps<'a>) -> HtmlToken<'a> {
     let view = props.view;
     let cell = Rc::new(RefCell::new(props));
     let cell_2 = cell.clone();

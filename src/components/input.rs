@@ -10,8 +10,8 @@ pub struct InputProps<'a> {
   pub on_keydown: Box<events::KeyboardEventHandler<'a>>,
 }
 
-impl<'a> Component<'a, InputProps<'a>> for Input {
-  fn render(&'a mut self, props: InputProps<'a>) -> HtmlToken<'a> {
+impl<'a> StatelessComponent<'a, InputProps<'a>> for Input {
+  fn render(props: InputProps<'a>) -> HtmlToken<'a> {
     jsx!(<input
       value={props.value}
       on_input={props.on_input}
