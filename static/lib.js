@@ -79,6 +79,7 @@ const findNodeWithPath = (path) =>
 function scheduleRender(appStateInterface) {
   setTimeout(() => {
     const diff = JSON.parse(appStateInterface.get_diff());
+    const nodesToRemove = [];
     diff.forEach(([path, operation]) => {
       // this is how enum's are serialized...
       if (operation.Replace) {
@@ -104,7 +105,8 @@ function scheduleRender(appStateInterface) {
         }
       } else if (operation.Delete) {
         const node = findNodeWithPath(path);
-        node.remove();
+        // node.remove();
+        nodesToRemove.push(node);
       } else if (operation.UpdateAttributes) {
         const node = findNodeWithPath(path);
         Object.entries(operation.UpdateAttributes.new_attributes)
@@ -113,6 +115,10 @@ function scheduleRender(appStateInterface) {
           });
       }
     });
+
+    // This seems like a smell, like maybe we should just be getting the right
+    // diff.
+    nodesToRemove.forEach(node => node.remove());
   });
 }
 
