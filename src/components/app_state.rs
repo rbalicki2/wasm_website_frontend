@@ -5,6 +5,7 @@ use std::rc::Rc;
 
 use super::input;
 use super::view_picker;
+use super::todo_item_display;
 
 #[derive(Clone)]
 pub struct AppState {
@@ -84,6 +85,16 @@ impl<'a> Component<'a, ()> for AppState {
       Smithy Todo List
       <div>{view_picker::ViewPicker::render(view_picker_props)}</div>
       <div>{input::Input::render(input_props)}</div>
+      <div>{
+        self_2.todo_items.iter().map(|todo_item| {
+          let todo_item = todo_item.clone();
+          let todo_item_display_props = todo_item_display::TodoItemDisplayProps {
+            todo_item,
+            on_complete_item: Box::new(|| {}),
+          };
+          todo_item_display::TodoItemDisplay::render(todo_item_display_props)
+        }).collect::<Vec<HtmlToken>>()
+      }</div>
     </div>)
   }
 }

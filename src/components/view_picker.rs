@@ -13,16 +13,6 @@ pub struct ViewPickerProps<'a> {
   pub on_select_view: Box<FnMut(View) -> () + 'a>,
 }
 
-// impl ViewPicker {
-//   fn render_view<'a>(view: View, set_view: &'a mut Box<impl FnMut() -> () + 'a>, is_selected: bool) -> HtmlToken<'a> {
-//     jsx!(
-//       <div on_click={Box::new(move |_| set_view())}>
-//         { format!("{:?}", view) } - { if is_selected { Some("x") } else { None } }
-//       </div>
-//     )
-//   }
-// }
-
 impl<'a> StatelessComponent<'a, ViewPickerProps<'a>> for ViewPicker {
   fn render(props: ViewPickerProps<'a>) -> HtmlToken<'a> {
     let view = props.view;
