@@ -4,6 +4,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 use super::input::*;
+use super::view_picker;
 
 #[derive(Clone)]
 pub struct AppState {
@@ -14,6 +15,7 @@ pub struct AppState {
 #[derive(Clone)]
 pub struct AppStateComponents {
   pub input: Input,
+  pub view_picker: view_picker::ViewPicker,
 }
 
 #[derive(Clone)]
@@ -23,12 +25,13 @@ pub struct AppStateState {
   pub view: View,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum View {
   All,
   Done,
   Incomplete,
 }
+
 
 #[derive(Clone)]
 pub struct TodoItem {
@@ -41,7 +44,8 @@ impl AppState {
   pub fn new() -> AppState {
     AppState {
       components: AppStateComponents {
-        input: Input {}
+        input: Input {},
+        view_picker: view_picker::ViewPicker {},
       },
       state: AppStateState {
         todo_items: vec![],
@@ -67,8 +71,9 @@ impl<'a> Component<'a, ()> for AppState {
     let self_2 = self.clone();
     let cell = Rc::new(RefCell::new(&mut self.state));
     let cell_2 = cell.clone();
-    // let cell_3 = cell.clone();
+    let cell_3 = cell.clone();
     let input = &mut self.components.input;
+    let view_picker = &mut self.components.view_picker;
 
     let input_props: InputProps<'a> = InputProps {
       value: self_2.state.current_text,
@@ -86,11 +91,20 @@ impl<'a> Component<'a, ()> for AppState {
       }),
     };
 
-      // Smithy Todo List
-      // <div>{input.render(input_props)}</div>
-      // number of todos: {self_2.state.todo_items.len()}
-      // { vec![HtmlToken::Text("foo".to_string()) ]}
-    jsx_verbose!(<div>
+    let view_picker_props = view_picker::ViewPickerProps {
+      view: self_2.state.view,
+      on_select_view: Box::new(
+        move |view| {
+          let mut state = cell_3.borrow_mut();
+          state.view = view;
+        }
+      ),
+    };
+
+    jsx!(<div>
+      Smithy Todo List
+      <div>{view_picker.render(view_picker_props)}</div>
+      <div>{input.render(input_props)}</div>
     </div>)
   }
 }
