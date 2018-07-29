@@ -35,10 +35,25 @@ impl<'a> StatelessComponent<'a, ViewPickerProps<'a>> for ViewPicker {
       (&mut props.on_select_view)(View::Incomplete)
     });
 
-    jsx!(<div>
-      <span on_click={set_all}>All {if view == View::All { Some("x") } else { None }}</span>{" - "}
-      <span on_click={set_done}>Done {if view == View::Done { Some("x") } else { None }}</span>{" - "}
-      <span on_click={set_incomplete}>Incomplete {if view == View::Incomplete { Some("x") } else { None}}</span>
+    jsx!(<div class="mt-2 btn-group">
+      <button
+        class={format!("btn btn-primary {}", if view == View::All {"active"} else {""})}
+        on_click={set_all}
+      >
+        All
+      </button>
+      <button
+        class={format!("btn btn-primary {}", if view == View::Done {"active"} else {""})}
+        on_click={set_done}
+      >
+        Done
+      </button>
+      <button
+        class={format!("btn btn-primary {}", if view == View::Incomplete {"active"} else {""})}
+        on_click={set_incomplete}
+      >
+        Incomplete
+      </button>
     </div>)
   }
 }

@@ -76,6 +76,15 @@ const getPathFromChildToParent = (finalParent, node) => {
 const findNodeWithPath = (path) =>
   path.reduce((node, childIndex) => (node && node.childNodes[childIndex]), getAppNode());
 
+const updateAttribute = (node, attr, val) => {
+  if (attr === 'class') {
+    // Thanks, DOM APIs!
+    node.classList = val;
+  } else {
+    node[attr] = val;
+  }
+};
+
 function scheduleRender(appStateInterface) {
   setTimeout(() => {
     const diff = JSON.parse(appStateInterface.get_diff());
@@ -111,7 +120,7 @@ function scheduleRender(appStateInterface) {
         const node = findNodeWithPath(path);
         Object.entries(operation.UpdateAttributes.new_attributes)
           .forEach(([attr, val]) => {
-            node[attr] = val;
+            updateAttribute(node, attr, val);
           });
       }
     });

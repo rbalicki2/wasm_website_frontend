@@ -13,6 +13,8 @@ pub struct InputProps<'a> {
 impl<'a> StatelessComponent<'a, InputProps<'a>> for Input {
   fn render(props: InputProps<'a>) -> HtmlToken<'a> {
     jsx!(<input
+      class="form-control mt-3"
+      type="text"
       value={props.value}
       on_input={props.on_input}
       on_keydown={props.on_keydown}

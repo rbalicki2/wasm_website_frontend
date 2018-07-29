@@ -30,7 +30,16 @@ pub struct TodoItem {
 impl AppState {
   pub fn new() -> AppState {
     AppState {
-      todo_items: vec![],
+      todo_items: vec![
+        TodoItem {
+          text: "Learn Smithy".to_string(),
+          is_done: false,
+        },
+        TodoItem {
+          text: "Rust, but verify".to_string(),
+          is_done: true,
+        },
+      ],
       current_text: "".to_string(),
       view: View::All,
     }
@@ -119,11 +128,19 @@ impl<'a> Component<'a, ()> for AppState {
       })
       .collect::<Vec<HtmlToken>>();
 
-    jsx!(<div>
-      Smithy Todo List
-      <div>{view_picker::ViewPicker::render(view_picker_props)}</div>
-      <div>{input::Input::render(input_props)}</div>
-      {todo_item_displays}
+    jsx!(<div class="container">
+      <link
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        rel="stylesheet"
+      />
+      <title>Smithy Todo List</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <h1 class="mt-4">Smithy Todo List</h1>
+      {view_picker::ViewPicker::render(view_picker_props)}
+      {input::Input::render(input_props)}
+      <ul class="mt-2 list-group list-group-flush">
+        {todo_item_displays}
+      </ul>
     </div>)
   }
 }
