@@ -54,6 +54,7 @@ impl<'a> Component<'a, ()> for AppState {
     let cell = Rc::new(RefCell::new(self));
     let cell_2 = cell.clone();
     let cell_3 = cell.clone();
+    let cell_4 = cell.clone();
 
     let input_props: input::InputProps<'a> = input::InputProps {
       value: self_2.current_text,
@@ -81,19 +82,37 @@ impl<'a> Component<'a, ()> for AppState {
       ),
     };
 
+    let view = self_2.view;
+    let is_visible = |todo_item: &TodoItem| {
+      match view {
+        View::All => true,
+        View::Done => todo_item.is_done,
+        View::Incomplete => !todo_item.is_done,
+      }
+    };
+
     jsx!(<div>
       Smithy Todo List
       <div>{view_picker::ViewPicker::render(view_picker_props)}</div>
       <div>{input::Input::render(input_props)}</div>
       <div>{
-        self_2.todo_items.iter().map(|todo_item| {
-          let todo_item = todo_item.clone();
-          let todo_item_display_props = todo_item_display::TodoItemDisplayProps {
-            todo_item,
-            on_complete_item: Box::new(|| {}),
-          };
-          todo_item_display::TodoItemDisplay::render(todo_item_display_props)
-        }).collect::<Vec<HtmlToken>>()
+        self_2.todo_items
+          .iter()
+          // .filter(is_visible) does not work. Why?
+          .filter(|t| is_visible(t))
+          .map(|todo_item| {
+            let cell = cell_4.clone();
+            let todo_item = todo_item.clone();
+            let todo_item_display_props = todo_item_display::TodoItemDisplayProps {
+              todo_item,
+              on_complete_item: Box::new(move || {
+                let mut state = cell.borrow_mut();
+                state.todo_items = vec![];
+              }),
+            };
+            todo_item_display::TodoItemDisplay::render(todo_item_display_props)
+          })
+          .collect::<Vec<HtmlToken>>()
       }</div>
     </div>)
   }
