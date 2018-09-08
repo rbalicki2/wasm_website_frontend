@@ -1,4 +1,4 @@
-#![feature(proc_macro, wasm_custom_section, wasm_import_module, proc_macro_non_items)]
+#![feature(proc_macro_non_items)]
 
 extern crate smithy;
 extern crate jsx_types;
