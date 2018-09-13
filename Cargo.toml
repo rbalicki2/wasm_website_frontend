@@ -7,7 +7,12 @@ authors = ["Robert Balicki <robert.balicki@gmail.com>"]
 crate-type = ["cdylib"]
 
 [dependencies]
-wasm-bindgen = "0.2"
+wasm-bindgen = { git = 'https://github.com/rustwasm/wasm-bindgen' }
 jsx_macro = { path = "../jsx_compiler/jsx_macro" }
 jsx_types = { path = "../jsx_compiler/jsx_types" }
 smithy = { path = "../smithy" }
+
+[patch.crates-io]
+web-sys = { git = 'https://github.com/rustwasm/wasm-bindgen' }
+js-sys = { git = 'https://github.com/rustwasm/wasm-bindgen' }
+wasm-bindgen = { git = 'https://github.com/rustwasm/wasm-bindgen' }
