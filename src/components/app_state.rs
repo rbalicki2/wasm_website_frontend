@@ -2,10 +2,13 @@ use jsx_macro::*;
 use jsx_types::*;
 use std::cell::RefCell;
 use std::rc::Rc;
+use std::mem::transmute;
 
 use super::input;
 use super::view_picker;
 use super::todo_item_display;
+
+use web_sys::{Event, HtmlInputElement, InputEvent, EventTarget};
 
 #[derive(Clone)]
 pub struct AppState {
@@ -76,14 +79,19 @@ impl<'a> Component<'a, ()> for AppState {
       value: self_2.current_text,
       on_input: Box::new(move |e| {
         let mut current_text = current_text_cell.borrow_mut();
-        if let Some(ref val) = e.value {
-          **current_text = val.to_string();
-        }
+        let e: &Event = unsafe {
+          transmute::<&InputEvent, &Event>(e)
+        };
+        let target: HtmlInputElement = unsafe {
+          transmute::<EventTarget, HtmlInputElement>(e.target().unwrap())
+        };
+
+        **current_text = target.value();
       }),
       on_keydown: Box::new(move |e| {
         let mut todo_items = todo_items_cell.borrow_mut();
         let mut current_text = current_text_cell_2.borrow_mut();
-        if e.key_code == 13 {
+        if e.key_code() == 13 {
           AppState::create_todo_item(&mut todo_items, &mut current_text);
         }
       }),
@@ -158,8 +166,7 @@ impl<'a> Component<'a, ()> for Foo {
       self.value = self.value + 1;
       self.click_y = m.client_y();
     });
-    let optional_section = if value % 2 == 0 { Some("val > 5") } else { None };
-    let class = if value % 3 == 0 { "col-sm" } else { "col-lg" };
+    let optional_section = if value % 2 == 0 { Some(jsx!(<div>val is even</div>)) } else { None };
     jsx!(<div class="container">
       <link
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -169,12 +176,6 @@ impl<'a> Component<'a, ()> for Foo {
       <h1 on_click={click_cb}>hi</h1>
       foo and we clicked on {click_y}
       {optional_section}
-      <div class="row">
-        <div class={class}>---</div>
-        <div class="col-sm">
-          ++++
-        </div>
-      </div>
     </div>)
   }
 }
