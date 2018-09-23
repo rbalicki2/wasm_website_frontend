@@ -11,6 +11,19 @@ wasm-bindgen = { git = 'https://github.com/rustwasm/wasm-bindgen' }
 jsx_macro = { path = "../jsx_compiler/jsx_macro" }
 jsx_types = { path = "../jsx_compiler/jsx_types" }
 smithy = { path = "../smithy" }
+web-sys = { version = "0.1", features = [
+  "Document",
+  "Element",
+  "Window",
+  "HtmlElement",
+  "HtmlTemplateElement",
+  "Event",
+  "UiEvent",
+  "MouseEvent",
+  "EventTarget",
+  "Node",
+  "NodeList"
+] }
 
 [patch.crates-io]
 web-sys = { git = 'https://github.com/rustwasm/wasm-bindgen' }
