@@ -3,7 +3,7 @@
     "serve": "babel-node ./scripts/serve.js",
     "build": "./scripts/build.sh",
     "build:prod": "./scripts/build-prod.sh",
-    "build:watch": "cargo watch -s './scripts/build.sh' -w . -w ../smithy/ -w ../jsx_compiler/"
+    "build:watch": "cargo watch -s './scripts/build.sh' -w . -w ../smithy/ -w ../jsx_compiler/ -w ./src/"
   },
   "devDependencies": {
     "babel-plugin-transform-decorators-legacy": "^1.3.5",

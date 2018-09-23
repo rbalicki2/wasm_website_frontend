@@ -10,7 +10,7 @@ use super::todo_item_display;
 
 use web_sys::{Event, HtmlInputElement, InputEvent, EventTarget};
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct AppState {
   pub todo_items: Vec<TodoItem>,
   pub current_text: String,
@@ -24,7 +24,7 @@ pub enum View {
   Incomplete,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct TodoItem {
   pub text: String,
   pub is_done: bool,
@@ -68,6 +68,7 @@ fn clone_many_times<T>(n: usize, cell: &T) -> Vec<T> where T: Clone {
 
 impl<'a> Component<'a, ()> for AppState {
   fn render(&'a mut self, _props: ()) -> HtmlToken<'a> {
+    let state_formatted = format!("{:?}", self);
     let self_2 = self.clone();
     let todo_items_cell = Rc::new(RefCell::new(&mut self.todo_items));
     let todo_items_cells = clone_many_times(self_2.todo_items.len(), &todo_items_cell);
@@ -93,6 +94,7 @@ impl<'a> Component<'a, ()> for AppState {
         let mut current_text = current_text_cell_2.borrow_mut();
         if e.key_code() == 13 {
           AppState::create_todo_item(&mut todo_items, &mut current_text);
+          **current_text = "".into();
         }
       }),
     };
@@ -149,33 +151,35 @@ impl<'a> Component<'a, ()> for AppState {
       <ul class="mt-2 list-group list-group-flush">
         {todo_item_displays}
       </ul>
+      <hr />
+      { state_formatted }
     </div>)
   }
 }
 
 
-pub struct Foo {
-  pub value: i32,
-  pub click_y: i32,
-}
-impl<'a> Component<'a, ()> for Foo {
-  fn render(&'a mut self, _props: ()) -> HtmlToken<'a> {
-    let value = self.value;
-    let click_y = self.click_y;
-    let click_cb: Box<events::MouseEventHandler<'a>> = Box::new(move |m| {
-      self.value = self.value + 1;
-      self.click_y = m.client_y();
-    });
-    let optional_section = if value % 2 == 0 { Some(jsx!(<div>val is even</div>)) } else { None };
-    jsx!(<div class="container">
-      <link
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        rel="stylesheet"
-      />
-      foo value is {value}
-      <h1 on_click={click_cb}>hi</h1>
-      foo and we clicked on {click_y}
-      {optional_section}
-    </div>)
-  }
-}
+// pub struct Foo {
+//   pub value: i32,
+//   pub click_y: i32,
+// }
+// impl<'a> Component<'a, ()> for Foo {
+//   fn render(&'a mut self, _props: ()) -> HtmlToken<'a> {
+//     let value = self.value;
+//     let click_y = self.click_y;
+//     let click_cb: Box<events::MouseEventHandler<'a>> = Box::new(move |m| {
+//       self.value = self.value + 1;
+//       self.click_y = m.client_y();
+//     });
+//     let optional_section = if value % 2 == 0 { Some(jsx!(<div>val is even</div>)) } else { None };
+//     jsx!(<div class="container">
+//       <link
+//         href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+//         rel="stylesheet"
+//       />
+//       foo value is {value}
+//       <h1 on_click={click_cb}>hi</h1>
+//       foo and we clicked on {click_y}
+//       {optional_section}
+//     </div>)
+//   }
+// }

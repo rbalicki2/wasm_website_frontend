@@ -3,7 +3,7 @@ use jsx_types::*;
 
 use super::TodoItem;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct TodoItemDisplay {}
 
 pub struct TodoItemDisplayProps<'a> {

@@ -1,6 +1,7 @@
 rm -rf dist_prod \
+  && mkdir dist_prod \
   && npm run build -- release \
-  && webpack \
+  && NODE_ENV=production webpack \
   && cp static/lib.js dist_prod/ \
   && cp static/index.html dist_prod/ \
   && aws s3 sync dist_prod/ s3://rb-smithy-todo-list/ --cache-control max-age=0,no-cache --delete \
