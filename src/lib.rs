@@ -13,10 +13,6 @@ pub mod components;
 #[wasm_bindgen]
 pub fn start() {
   let component = components::AppState::new();
-  // let component = components::Foo {
-  //   value: 3,
-  //   click_y: 0,
-  // };
 
   smithy::mount("app", Box::new(component));
 }

@@ -156,30 +156,3 @@ impl<'a> Component<'a, ()> for AppState {
     </div>)
   }
 }
-
-
-// pub struct Foo {
-//   pub value: i32,
-//   pub click_y: i32,
-// }
-// impl<'a> Component<'a, ()> for Foo {
-//   fn render(&'a mut self, _props: ()) -> HtmlToken<'a> {
-//     let value = self.value;
-//     let click_y = self.click_y;
-//     let click_cb: Box<events::MouseEventHandler<'a>> = Box::new(move |m| {
-//       self.value = self.value + 1;
-//       self.click_y = m.client_y();
-//     });
-//     let optional_section = if value % 2 == 0 { Some(jsx!(<div>val is even</div>)) } else { None };
-//     jsx!(<div class="container">
-//       <link
-//         href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-//         rel="stylesheet"
-//       />
-//       foo value is {value}
-//       <h1 on_click={click_cb}>hi</h1>
-//       foo and we clicked on {click_y}
-//       {optional_section}
-//     </div>)
-//   }
-// }
