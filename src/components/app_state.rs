@@ -28,6 +28,7 @@ pub enum View {
 pub struct TodoItem {
   pub text: String,
   pub is_done: bool,
+  pub is_hovered: bool,
 }
 
 impl AppState {
@@ -37,10 +38,12 @@ impl AppState {
         TodoItem {
           text: "Learn Smithy".to_string(),
           is_done: false,
+          is_hovered: false,
         },
         TodoItem {
           text: "Rust, but verify".to_string(),
           is_done: true,
+          is_hovered: false,
         },
       ],
       current_text: "".to_string(),
@@ -52,6 +55,7 @@ impl AppState {
     let todo_item = TodoItem {
       text: current_text.clone(),
       is_done: false,
+      is_hovered: false,
     };
     *current_text = "".to_string();
     todo_items.push(todo_item);
@@ -125,6 +129,8 @@ impl<'a> Component<'a, ()> for AppState {
       .map(|((todo_item, rc), i)| (todo_item, rc, i))
       .filter(|(t, _, _)| is_visible(t))
       .map(|(todo_item, rc, i)| {
+        let rc2 = rc.clone();
+        let rc3 = rc.clone();
         let todo_item = todo_item.clone();
         let todo_item_display_props = todo_item_display::TodoItemDisplayProps {
           todo_item,
@@ -133,6 +139,16 @@ impl<'a> Component<'a, ()> for AppState {
             let todo_item = todo_items.get_mut(i).unwrap();
             todo_item.is_done = !todo_item.is_done;
           }),
+          on_hover_item: Box::new(move || {
+            let mut todo_items = rc2.borrow_mut();
+            let todo_item = todo_items.get_mut(i).unwrap();
+            todo_item.is_hovered = true;
+          }),
+          on_unhover_item: Box::new(move || {
+            let mut todo_items = rc3.borrow_mut();
+            let todo_item = todo_items.get_mut(i).unwrap();
+            todo_item.is_hovered = false;
+          })
         };
         todo_item_display::TodoItemDisplay::render(todo_item_display_props)
       })
