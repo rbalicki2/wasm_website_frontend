@@ -36,7 +36,7 @@ wasm-bindgen = { git = 'https://github.com/rustwasm/wasm-bindgen' }
 
 [profile.dev]
 # uncomment these when building for prod...
-debug = false
-opt-level = 'z'
+# debug = false
+# opt-level = 'z'
 
 # N.B. lto cannot be enabled, yet?

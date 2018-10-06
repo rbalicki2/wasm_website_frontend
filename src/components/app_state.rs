@@ -153,6 +153,7 @@ impl<'a> Component<'a, ()> for AppState {
       </ul>
       <hr />
       { state_formatted }
+      <hr />
     </div>)
   }
 }

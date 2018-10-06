@@ -1,6 +1,6 @@
-rm -rf dist
+# rm -rf dist
 mkdir dist
-rm -rf dist_prod
+# rm -rf dist_prod
 mkdir dist_prod
 
 cp static/* dist/
