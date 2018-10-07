@@ -7,11 +7,11 @@ authors = ["Robert Balicki <robert.balicki@gmail.com>"]
 crate-type = ["cdylib"]
 
 [dependencies]
-wasm-bindgen = { git = 'https://github.com/rustwasm/wasm-bindgen' }
+wasm-bindgen = { version = "0.2.24", features = ["nightly"] }
 jsx_macro = { path = "../jsx_compiler/jsx_macro" }
 jsx_types = { path = "../jsx_compiler/jsx_types" }
 smithy = { path = "../smithy" }
-web-sys = { version = "0.1", features = [
+web-sys = { version = "0.3.1", features = [
   "Document",
   "DocumentFragment",
   "Element",
