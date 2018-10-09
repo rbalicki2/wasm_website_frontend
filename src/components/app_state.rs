@@ -9,7 +9,14 @@ use super::view_picker;
 use super::todo_item_display;
 use super::event_tester;
 
-use web_sys::{Event, HtmlInputElement, InputEvent, EventTarget};
+use web_sys::{
+  Event,
+  HtmlInputElement,
+  InputEvent,
+  EventTarget,
+  // console,
+};
+// use wasm_bindgen::JsValue;
 
 #[derive(Clone, Debug)]
 pub struct AppState {
