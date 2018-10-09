@@ -22,6 +22,9 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
         // on_dblclick={Box::new(|_| console::log_1(&JsValue::from_str("dbl click event")))}
         // on_drag={Box::new(|_| console::log_1(&JsValue::from_str("drag event")))}
         // on_mousedown={Box::new(|_| console::log_1(&JsValue::from_str("mouse down event")))}
+        on_copy={Box::new(|_| console::log_1(&JsValue::from_str("copy")))}
+        on_cut={Box::new(|_| console::log_1(&JsValue::from_str("cut")))}
+        on_paste={Box::new(|_| console::log_1(&JsValue::from_str("paste")))}
       >
         foo tester
       </h1>
@@ -41,16 +44,27 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
 
         // on_contextmenu={Box::new(|_| console::log_1(&JsValue::from_str("context menu event")))}
         // on_mousemove={Box::new(|_| console::log_1(&JsValue::from_str("move your mouse")))}
-        on_mouseup={Box::new(|_| console::log_1(&JsValue::from_str("mouse up")))}
+        // on_mouseup={Box::new(|_| console::log_1(&JsValue::from_str("mouse up")))}
 
-        on_pointerdown={Box::new(|_| console::log_1(&JsValue::from_str("pointerdown")))}
-        on_pointermove={Box::new(|_| console::log_1(&JsValue::from_str("move")))}
-        on_pointerup={Box::new(|_| console::log_1(&JsValue::from_str("up")))}
-        on_pointerenter={Box::new(|_| console::log_1(&JsValue::from_str("enter")))}
-        on_pointerleave={Box::new(|_| console::log_1(&JsValue::from_str("leave")))}
-        on_pointerover={Box::new(|_| console::log_1(&JsValue::from_str("over")))}
-        on_pointerout={Box::new(|_| console::log_1(&JsValue::from_str("out")))}
+        // on_pointerdown={Box::new(|_| console::log_1(&JsValue::from_str("pointerdown")))}
+        // on_pointermove={Box::new(|_| console::log_1(&JsValue::from_str("move")))}
+        // on_pointerup={Box::new(|_| console::log_1(&JsValue::from_str("up")))}
+        // on_pointerenter={Box::new(|_| console::log_1(&JsValue::from_str("enter")))}
+        // on_pointerleave={Box::new(|_| console::log_1(&JsValue::from_str("leave")))}
+        // on_pointerover={Box::new(|_| console::log_1(&JsValue::from_str("over")))}
+        // on_pointerout={Box::new(|_| console::log_1(&JsValue::from_str("out")))}
       />
+      // <div
+      //   style="max-height: 100px; overflow-y: scroll" 
+      //   class="overflow"
+      //   on_scroll={Box::new(|_| console::log_1(&JsValue::from_str("scroll")))}
+      // >
+      //   <h1>asdfasdf</h1>
+      //   <h1>asdfasdf</h1>
+      //   <h1>asdfasdf</h1>
+      //   <h1>asdfasdf</h1>
+      //   <h1>asdfasdf</h1>
+      // </div>
     </form>)
   }
 }

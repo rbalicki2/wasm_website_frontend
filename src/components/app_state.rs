@@ -14,9 +14,9 @@ use web_sys::{
   HtmlInputElement,
   InputEvent,
   EventTarget,
-  console,
+  // console,
 };
-use wasm_bindgen::JsValue;
+// use wasm_bindgen::JsValue;
 
 #[derive(Clone, Debug)]
 pub struct AppState {
@@ -163,8 +163,10 @@ impl<'a> Component<'a, ()> for AppState {
       .collect::<Vec<HtmlToken>>();
 
     jsx!(<div class="container"
-      on_pointerenter={Box::new(|_| console::log_1(&JsValue::from_str("enter")))}
-      on_pointerleave={Box::new(|_| console::log_1(&JsValue::from_str("leave")))}
+      // on_pointerenter={Box::new(|_| console::log_1(&JsValue::from_str("enter")))}
+      // on_pointerleave={Box::new(|_| console::log_1(&JsValue::from_str("leave")))}
+      // on_scroll={Box::new(|_| console::log_1(&JsValue::from_str("scroll")))}
+      // style="max-height: 100px;overflow-y:scroll"
     >
       <link
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
