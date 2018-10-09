@@ -65,6 +65,14 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
       //   <h1>asdfasdf</h1>
       //   <h1>asdfasdf</h1>
       // </div>
+      <img
+        src="http://localhost:8000/wheel.svg"
+        on_load={Box::new(|_| console::log_1(&JsValue::from_str("load")))}
+      />
+      <img
+        src="http://localhost:8000/wheel.svg2"
+        on_error={Box::new(|_| console::log_1(&JsValue::from_str("error")))}
+      />
     </form>)
   }
 }
