@@ -42,6 +42,14 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
         // on_contextmenu={Box::new(|_| console::log_1(&JsValue::from_str("context menu event")))}
         // on_mousemove={Box::new(|_| console::log_1(&JsValue::from_str("move your mouse")))}
         on_mouseup={Box::new(|_| console::log_1(&JsValue::from_str("mouse up")))}
+
+        on_pointerdown={Box::new(|_| console::log_1(&JsValue::from_str("pointerdown")))}
+        on_pointermove={Box::new(|_| console::log_1(&JsValue::from_str("move")))}
+        on_pointerup={Box::new(|_| console::log_1(&JsValue::from_str("up")))}
+        on_pointerenter={Box::new(|_| console::log_1(&JsValue::from_str("enter")))}
+        on_pointerleave={Box::new(|_| console::log_1(&JsValue::from_str("leave")))}
+        on_pointerover={Box::new(|_| console::log_1(&JsValue::from_str("over")))}
+        on_pointerout={Box::new(|_| console::log_1(&JsValue::from_str("out")))}
       />
     </form>)
   }
