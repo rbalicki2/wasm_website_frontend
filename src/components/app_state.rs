@@ -7,6 +7,7 @@ use std::mem::transmute;
 use super::input;
 use super::view_picker;
 use super::todo_item_display;
+use super::event_tester;
 
 use web_sys::{Event, HtmlInputElement, InputEvent, EventTarget};
 
@@ -170,6 +171,7 @@ impl<'a> Component<'a, ()> for AppState {
       <hr />
       { state_formatted }
       <hr />
+      { event_tester::EventTester::render(()) }
     </div>)
   }
 }
