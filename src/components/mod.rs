@@ -5,4 +5,3 @@ mod todo_item_display;
 mod event_tester;
 
 pub use self::app_state::*;
-

@@ -33,7 +33,7 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
         foo tester
       </h1>
       <input
-        required=""
+        required
         on_invalid={Box::new(|_| {
           console::log_1(&JsValue::from_str("invalid input"));
         })}
@@ -86,7 +86,7 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
       <img
         src="http://localhost:8000/wheel.svg"
         on_load={Box::new(|_| console::log_1(&JsValue::from_str("load")))}
-        draggable=""
+        draggable
         // on_drag={Box::new(|_| console::log_1(&JsValue::from_str("drag")))}
         on_drag_start={Box::new(|_| console::log_1(&JsValue::from_str("drag_start")))}
         on_drag_end={Box::new(|_| console::log_1(&JsValue::from_str("drag end")))}
@@ -102,7 +102,7 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
         on_drag_exit={Box::new(|_| console::log_1(&JsValue::from_str("drag exit")))}
         on_drag_leave={Box::new(|_| console::log_1(&JsValue::from_str("drag leave")))}
         on_drop={Box::new(|_| console::log_1(&JsValue::from_str("drop queen")))}
-        droppable=""
+        droppable
       >
         drag and drop target!!!
       </h1>
