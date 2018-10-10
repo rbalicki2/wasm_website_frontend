@@ -80,11 +80,26 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
       <img
         src="http://localhost:8000/wheel.svg"
         on_load={Box::new(|_| console::log_1(&JsValue::from_str("load")))}
+        draggable=""
+        // on_drag={Box::new(|_| console::log_1(&JsValue::from_str("drag")))}
+        on_drag_start={Box::new(|_| console::log_1(&JsValue::from_str("drag_start")))}
+        on_drag_end={Box::new(|_| console::log_1(&JsValue::from_str("drag end")))}
+        on_drop={Box::new(|_| console::log_1(&JsValue::from_str("drop")))}
       />
       <img
         src="http://localhost:8000/wheel.svg2"
         on_error={Box::new(|_| console::log_1(&JsValue::from_str("error")))}
       />
+      <h1
+        // on_drag_over={Box::new(|_| console::log_1(&JsValue::from_str("drag over")))}
+        on_drag_enter={Box::new(|_| console::log_1(&JsValue::from_str("drag enter")))}
+        on_drag_exit={Box::new(|_| console::log_1(&JsValue::from_str("drag exit")))}
+        on_drag_leave={Box::new(|_| console::log_1(&JsValue::from_str("drag leave")))}
+        on_drop={Box::new(|_| console::log_1(&JsValue::from_str("drop queen")))}
+        droppable=""
+      >
+        drag and drop target!!!
+      </h1>
     </form>)
   }
 }
