@@ -17,6 +17,9 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
         let e: &Event = unsafe { transmute::<&InputEvent, &Event>(e) };
         e.prevent_default();
       })}
+      on_invalid={Box::new(|_| {
+        console::log_1(&JsValue::from_str("invalid"));
+      })}
     >
       <h1
         // on_dblclick={Box::new(|_| console::log_1(&JsValue::from_str("dbl click event")))}
@@ -31,6 +34,10 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
         foo tester
       </h1>
       <input
+        required=""
+        on_invalid={Box::new(|_| {
+          console::log_1(&JsValue::from_str("invalid input"));
+        })}
         // on_input={Box::new(|_| console::log_1(&JsValue::from_str("input event")))}
 
         // on_key_down={Box::new(|_| console::log_1(&JsValue::from_str("keydown event")))}
