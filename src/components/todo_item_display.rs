@@ -3,6 +3,9 @@ use jsx_types::*;
 
 use super::TodoItem;
 
+use web_sys::console;
+use wasm_bindgen::JsValue;
+
 #[derive(Clone, Debug)]
 pub struct TodoItemDisplay {}
 
@@ -24,13 +27,15 @@ impl<'a> StatelessComponent<'a, TodoItemDisplayProps<'a>> for TodoItemDisplay {
 
     jsx!(<li
       class={format!(
-        "list-group-item border-0 pl-0 {}",
-        if props.todo_item.is_done { "font-italic" } else { "" }
+        "list-group-item border-0 pl-0 {} {} todo-item",
+        if props.todo_item.is_done { "font-italic" } else { "" },
+        if props.todo_item.is_hovered { "todo-item-hovered" } else { "" }
       )}
       on_mouse_over={Box::new(move |_| on_hover_item())}
       on_mouse_out={Box::new(move |_| on_unhover_item())}
       on_click={Box::new(move |_| on_complete_item())}
       style={style}
+      on_transition_end={Box::new(move |_| console::log_1(&JsValue::from_str("transition end")))}
     >
       {text} {if is_hovered { Some("*") } else { None }}
     </li>)
