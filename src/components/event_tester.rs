@@ -25,6 +25,8 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
         on_copy={Box::new(|_| console::log_1(&JsValue::from_str("copy")))}
         on_cut={Box::new(|_| console::log_1(&JsValue::from_str("cut")))}
         on_paste={Box::new(|_| console::log_1(&JsValue::from_str("paste")))}
+        on_mouseenter={Box::new(|_| console::log_1(&JsValue::from_str("enter")))}
+        on_mouseleave={Box::new(|_| console::log_1(&JsValue::from_str("leave")))}
       >
         foo tester
       </h1>
@@ -35,9 +37,9 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
         // on_keyup={Box::new(|_| console::log_1(&JsValue::from_str("keyup event")))}
         // on_keypress={Box::new(|_| console::log_1(&JsValue::from_str("keypress event")))}
 
-        // on_change={Box::new(|_| console::log_1(&JsValue::from_str("change event")))}
-        // on_focus={Box::new(|_| console::log_1(&JsValue::from_str("focus event")))}
-        // on_blur={Box::new(|_| console::log_1(&JsValue::from_str("blur event")))}
+        on_change={Box::new(|_| console::log_1(&JsValue::from_str("change event")))}
+        on_focus={Box::new(|_| console::log_1(&JsValue::from_str("focus event")))}
+        on_blur={Box::new(|_| console::log_1(&JsValue::from_str("blur event")))}
         // on_mouseenter={Box::new(|_| console::log_1(&JsValue::from_str("mouse enter event")))}
         // on_mouseleave={Box::new(|_| console::log_1(&JsValue::from_str("mouse leave event")))}
         autofocus={""}
@@ -52,8 +54,18 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
         // on_pointerenter={Box::new(|_| console::log_1(&JsValue::from_str("enter")))}
         // on_pointerleave={Box::new(|_| console::log_1(&JsValue::from_str("leave")))}
         // on_pointerover={Box::new(|_| console::log_1(&JsValue::from_str("over")))}
-        // on_pointerout={Box::new(|_| console::log_1(&JsValue::from_str("out")))}
+        on_select={Box::new(|_| console::log_1(&JsValue::from_str("select some text yo")))}
       />
+
+      // <details
+      //   class="details"
+      //   on_toggle={Box::new(|_| console::log_1(&JsValue::from_str("toggle")))}
+      //   on_animation_start={Box::new(|_| console::log_1(&JsValue::from_str("animation start")))}
+      //   on_animation_end={Box::new(|_| console::log_1(&JsValue::from_str("animation end")))}
+      //   on_animation_iteration={Box::new(|_| console::log_1(&JsValue::from_str("animation iteration")))}
+      // >
+      //   stfu
+      // </details>
       // <div
       //   style="max-height: 100px; overflow-y: scroll" 
       //   class="overflow"
