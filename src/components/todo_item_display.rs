@@ -27,8 +27,8 @@ impl<'a> StatelessComponent<'a, TodoItemDisplayProps<'a>> for TodoItemDisplay {
         "list-group-item border-0 pl-0 {}",
         if props.todo_item.is_done { "font-italic" } else { "" }
       )}
-      on_mouseover={Box::new(move |_| on_hover_item())}
-      on_mouseout={Box::new(move |_| on_unhover_item())}
+      on_mouse_over={Box::new(move |_| on_hover_item())}
+      on_mouse_out={Box::new(move |_| on_unhover_item())}
       on_click={Box::new(move |_| on_complete_item())}
       style={style}
     >

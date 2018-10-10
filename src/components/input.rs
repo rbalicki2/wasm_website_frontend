@@ -7,7 +7,7 @@ pub struct Input {}
 pub struct InputProps<'a> {
   pub value: String,
   pub on_input: Box<events::InputEventHandler<'a>>,
-  pub on_keydown: Box<events::KeyboardEventHandler<'a>>,
+  pub on_key_down: Box<events::KeyboardEventHandler<'a>>,
 }
 
 impl<'a> StatelessComponent<'a, InputProps<'a>> for Input {
@@ -17,7 +17,7 @@ impl<'a> StatelessComponent<'a, InputProps<'a>> for Input {
       type="text"
       value={props.value}
       on_input={props.on_input}
-      on_keydown={props.on_keydown}
+      on_key_down={props.on_key_down}
     />)
   }
 }

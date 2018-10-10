@@ -101,7 +101,7 @@ impl<'a> Component<'a, ()> for AppState {
 
         **current_text = target.value();
       }),
-      on_keydown: Box::new(move |e| {
+      on_key_down: Box::new(move |e| {
         let mut todo_items = todo_items_cell.borrow_mut();
         let mut current_text = current_text_cell_2.borrow_mut();
         if e.key_code() == 13 {
