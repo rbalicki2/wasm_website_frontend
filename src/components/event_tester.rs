@@ -22,8 +22,7 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
       })}
     >
       <h1
-        // on_dblclick={Box::new(|_| console::log_1(&JsValue::from_str("dbl click event")))}
-        // on_drag={Box::new(|_| console::log_1(&JsValue::from_str("drag event")))}
+        on_dbl_click={Box::new(|_| console::log_1(&JsValue::from_str("dbl click event")))}
         // on_mouse_down={Box::new(|_| console::log_1(&JsValue::from_str("mouse down event")))}
         on_copy={Box::new(|_| console::log_1(&JsValue::from_str("copy")))}
         on_cut={Box::new(|_| console::log_1(&JsValue::from_str("cut")))}
