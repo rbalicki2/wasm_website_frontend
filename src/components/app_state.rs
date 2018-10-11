@@ -195,6 +195,13 @@ impl<'a> Component<'a, ()> for AppState {
       <hr />
       { state_formatted }
       <hr />
+      <div
+        on_mouse_move={Box::new(move |_| {
+          log_1(&JsValue::from_str("mouse over"));
+        })}
+      >
+        here <span>not here</span>
+      </div>
       { event_tester::EventTester::render(()) }
 
       {
