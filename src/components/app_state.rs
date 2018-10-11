@@ -103,9 +103,8 @@ impl<'a> Component<'a, ()> for AppState {
       value: self_2.current_text,
       on_input: Box::new(move |e| {
         let mut current_text = current_text_cell.borrow_mut();
-        let e: &Event = unsafe {
-          transmute::<&InputEvent, &Event>(e)
-        };
+        let e: &Event = e.as_ref();
+
         let target: HtmlInputElement = unsafe {
           transmute::<EventTarget, HtmlInputElement>(e.target().unwrap())
         };

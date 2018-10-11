@@ -31,6 +31,8 @@ impl<'a> StatelessComponent<'a, TodoItemDisplayProps<'a>> for TodoItemDisplay {
         if props.todo_item.is_done { "font-italic" } else { "" },
         if props.todo_item.is_hovered { "todo-item-hovered" } else { "" }
       )}
+      // N.B. the following line is correctly broken and logs an error!
+      // value="foo"
       on_mouse_over={Box::new(move |_| on_hover_item())}
       on_mouse_out={Box::new(move |_| on_unhover_item())}
       on_click={Box::new(move |_| on_complete_item())}
