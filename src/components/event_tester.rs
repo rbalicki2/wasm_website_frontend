@@ -1,8 +1,12 @@
 use jsx_macro::*;
 use jsx_types::*;
-use std::mem::transmute;
+// use std::mem::transmute;
 
-use web_sys::{console, Event, InputEvent};
+use web_sys::{
+  console,
+  // Event,
+  // InputEvent
+};
 use wasm_bindgen::JsValue;
 
 #[derive(Clone, Debug)]
@@ -12,40 +16,37 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
   fn render(_props: ()) -> HtmlToken<'a> {
     jsx!(<form
       class="tester"
-      on_submit={Box::new(|e| {
-        console::log_1(&JsValue::from_str("submit event"));
-        let e: &Event = unsafe { transmute::<&InputEvent, &Event>(e) };
-        e.prevent_default();
-      })}
-      on_invalid={Box::new(|_| {
-        console::log_1(&JsValue::from_str("invalid"));
-      })}
+      // on_submit={Box::new(|e| {
+      //   console::log_1(&JsValue::from_str("submit event"));
+      //   let e: &Event = unsafe { transmute::<&InputEvent, &Event>(e) };
+      //   e.prevent_default();
+      // })}
     >
       <h1
-        on_dbl_click={Box::new(|_| console::log_1(&JsValue::from_str("dbl click event")))}
+        // on_dbl_click={Box::new(|_| console::log_1(&JsValue::from_str("dbl click event")))}
         // on_mouse_down={Box::new(|_| console::log_1(&JsValue::from_str("mouse down event")))}
-        on_copy={Box::new(|_| console::log_1(&JsValue::from_str("copy")))}
-        on_cut={Box::new(|_| console::log_1(&JsValue::from_str("cut")))}
-        on_paste={Box::new(|_| console::log_1(&JsValue::from_str("paste")))}
-        on_mouse_enter={Box::new(|_| console::log_1(&JsValue::from_str("enter")))}
-        on_mouse_leave={Box::new(|_| console::log_1(&JsValue::from_str("leave")))}
+        // on_copy={Box::new(|_| console::log_1(&JsValue::from_str("copy")))}
+        // on_cut={Box::new(|_| console::log_1(&JsValue::from_str("cut")))}
+        // on_paste={Box::new(|_| console::log_1(&JsValue::from_str("paste")))}
+        // on_mouse_enter={Box::new(|_| console::log_1(&JsValue::from_str("enter")))}
+        // on_mouse_leave={Box::new(|_| console::log_1(&JsValue::from_str("leave")))}
       >
         foo tester
       </h1>
       <input
         required
-        on_invalid={Box::new(|_| {
-          console::log_1(&JsValue::from_str("invalid input"));
-        })}
+        // on_invalid={Box::new(|_| {
+        //   console::log_1(&JsValue::from_str("invalid input"));
+        // })}
         // on_input={Box::new(|_| console::log_1(&JsValue::from_str("input event")))}
 
         // on_key_down={Box::new(|_| console::log_1(&JsValue::from_str("keydown event")))}
         // on_key_up={Box::new(|_| console::log_1(&JsValue::from_str("keyup event")))}
         // on_key_press={Box::new(|_| console::log_1(&JsValue::from_str("keypress event")))}
 
-        on_change={Box::new(|_| console::log_1(&JsValue::from_str("change event")))}
-        on_focus={Box::new(|_| console::log_1(&JsValue::from_str("focus event")))}
-        on_blur={Box::new(|_| console::log_1(&JsValue::from_str("blur event")))}
+        // on_change={Box::new(|_| console::log_1(&JsValue::from_str("change event")))}
+        // on_focus={Box::new(|_| console::log_1(&JsValue::from_str("focus event")))}
+        // on_blur={Box::new(|_| console::log_1(&JsValue::from_str("blur event")))}
         // on_mouse_enter={Box::new(|_| console::log_1(&JsValue::from_str("mouse enter event")))}
         // on_mouse_leave={Box::new(|_| console::log_1(&JsValue::from_str("mouse leave event")))}
         autofocus={""}
@@ -85,27 +86,27 @@ impl<'a> StatelessComponent<'a, ()> for EventTester {
       // </div>
       <img
         src="http://localhost:8000/wheel.svg"
-        on_load={Box::new(|_| console::log_1(&JsValue::from_str("load")))}
-        draggable
-        // on_drag={Box::new(|_| console::log_1(&JsValue::from_str("drag")))}
-        on_drag_start={Box::new(|_| console::log_1(&JsValue::from_str("drag_start")))}
-        on_drag_end={Box::new(|_| console::log_1(&JsValue::from_str("drag end")))}
-        on_drop={Box::new(|_| console::log_1(&JsValue::from_str("drop")))}
+        // on_load={Box::new(|_| console::log_1(&JsValue::from_str("load")))}
+        // draggable
+        // // on_drag={Box::new(|_| console::log_1(&JsValue::from_str("drag")))}
+        // on_drag_start={Box::new(|_| console::log_1(&JsValue::from_str("drag_start")))}
+        // on_drag_end={Box::new(|_| console::log_1(&JsValue::from_str("drag end")))}
+        // on_drop={Box::new(|_| console::log_1(&JsValue::from_str("drop")))}
       />
-      <img
-        src="http://localhost:8000/wheel.svg2"
-        on_error={Box::new(|_| console::log_1(&JsValue::from_str("error")))}
-      />
-      <h1
-        // on_drag_over={Box::new(|_| console::log_1(&JsValue::from_str("drag over")))}
-        on_drag_enter={Box::new(|_| console::log_1(&JsValue::from_str("drag enter")))}
-        on_drag_exit={Box::new(|_| console::log_1(&JsValue::from_str("drag exit")))}
-        on_drag_leave={Box::new(|_| console::log_1(&JsValue::from_str("drag leave")))}
-        on_drop={Box::new(|_| console::log_1(&JsValue::from_str("drop queen")))}
-        droppable
-      >
-        drag and drop target!!!
-      </h1>
+      // <img
+      //   src="http://localhost:8000/wheel.svg2"
+      //   on_error={Box::new(|_| console::log_1(&JsValue::from_str("error")))}
+      // />
+      // <h1
+      //   // on_drag_over={Box::new(|_| console::log_1(&JsValue::from_str("drag over")))}
+      //   on_drag_enter={Box::new(|_| console::log_1(&JsValue::from_str("drag enter")))}
+      //   on_drag_exit={Box::new(|_| console::log_1(&JsValue::from_str("drag exit")))}
+      //   on_drag_leave={Box::new(|_| console::log_1(&JsValue::from_str("drag leave")))}
+      //   on_drop={Box::new(|_| console::log_1(&JsValue::from_str("drop queen")))}
+      //   droppable
+      // >
+      //   drag and drop target!!!
+      // </h1>
     </form>)
   }
 }

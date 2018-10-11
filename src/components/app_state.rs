@@ -8,21 +8,24 @@ use super::input;
 use super::view_picker;
 use super::todo_item_display;
 use super::event_tester;
+use super::custom_select;
 
 use web_sys::{
   Event,
   HtmlInputElement,
   InputEvent,
   EventTarget,
-  // console,
 };
-// use wasm_bindgen::JsValue;
+use web_sys::console::log_1;
+use wasm_bindgen::JsValue;
 
 #[derive(Clone, Debug)]
 pub struct AppState {
-  pub todo_items: Vec<TodoItem>,
-  pub current_text: String,
-  pub view: View,
+  todo_items: Vec<TodoItem>,
+  current_text: String,
+  view: View,
+  select: custom_select::CustomSelect,
+  select_vec_items: Vec<String>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -56,6 +59,11 @@ impl AppState {
       ],
       current_text: "".to_string(),
       view: View::All,
+      select: custom_select::CustomSelect::new(),
+      select_vec_items: vec![
+        "one".into(),
+        "two".into(),
+      ],
     }
   }
 
@@ -82,11 +90,13 @@ impl<'a> Component<'a, ()> for AppState {
   fn render(&'a mut self, _props: ()) -> HtmlToken<'a> {
     let state_formatted = format!("{:?}", self);
     let self_2 = self.clone();
+    let items = &self.select_vec_items;
     let todo_items_cell = Rc::new(RefCell::new(&mut self.todo_items));
     let todo_items_cells = clone_many_times(self_2.todo_items.len(), &todo_items_cell);
     let current_text_cell = Rc::new(RefCell::new(&mut self.current_text));
     let current_text_cell_2 = current_text_cell.clone();
     let view_cell = Rc::new(RefCell::new(&mut self.view));
+    // let select_state = &mut self.select;
 
     let input_props: input::InputProps<'a> = input::InputProps {
       value: self_2.current_text,
@@ -162,6 +172,7 @@ impl<'a> Component<'a, ()> for AppState {
       })
       .collect::<Vec<HtmlToken>>();
 
+    // let select_state_html_token: HtmlToken<'b> = select_state.render(());
     jsx!(<div class="container"
       // on_pointerenter={Box::new(|_| console::log_1(&JsValue::from_str("enter")))}
       // on_pointerleave={Box::new(|_| console::log_1(&JsValue::from_str("leave")))}
@@ -184,6 +195,16 @@ impl<'a> Component<'a, ()> for AppState {
       { state_formatted }
       <hr />
       { event_tester::EventTester::render(()) }
+
+      {
+        self.select.render(custom_select::CustomSelectProps {
+          items,
+          on_click: Box::new(|s| {
+            log_1(&JsValue::from_str(&s));
+          })
+        })
+      }
+
     </div>)
   }
 }
