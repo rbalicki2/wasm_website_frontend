@@ -95,6 +95,7 @@ impl<'a> Component<'a, ()> for AppState {
     let todo_items_cells = clone_many_times(self_2.todo_items.len(), &todo_items_cell);
     let current_text_cell = Rc::new(RefCell::new(&mut self.current_text));
     let current_text_cell_2 = current_text_cell.clone();
+    let current_text_cell_3 = current_text_cell.clone();
     let view_cell = Rc::new(RefCell::new(&mut self.view));
     // let select_state = &mut self.select;
 
@@ -199,8 +200,11 @@ impl<'a> Component<'a, ()> for AppState {
       {
         self.select.render(custom_select::CustomSelectProps {
           items,
-          on_click: Box::new(|s| {
-            log_1(&JsValue::from_str(&s));
+          on_click: Box::new(move |s| {
+            // log_1(&JsValue::from_str("in on click handler in app state"));
+            // log_1(&JsValue::from_str(&s));
+            let mut current_text = current_text_cell_3.borrow_mut();
+            **current_text = s;
           })
         })
       }
